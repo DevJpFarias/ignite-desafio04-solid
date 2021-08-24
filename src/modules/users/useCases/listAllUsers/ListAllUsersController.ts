@@ -15,7 +15,7 @@ class ListAllUsersController {
     } catch (error) {
       return response
         .status(400)
-        .json({ error: "Deu ruim no ListAllController" });
+        .json({ error: "Usuário não é admin ou não encontrado!" });
     }
   }
 }

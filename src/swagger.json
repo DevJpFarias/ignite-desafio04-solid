@@ -1,0 +1,245 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Migufe's Documentation",
+        "description": "Essa é uma documentação sobre o Migufe's API",
+        "version": "1.0.0",
+        "contact": {
+            "email": "joaopfc2764@gmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [ "User" ],
+                "summary": "Cria um usuário",
+                "description": "Cria um usuário novo",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Exemplo de nome",
+                                    "email": "exemplodeemail@exemplo.com"
+                                }
+                            }
+                        }                      
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Criado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "id": "2c7714b1-6309-450e-93e1-3d424761f45d",
+                                        "admin": false,
+                                        "name": "Pedro Omar",
+                                        "email": "pedroomarneto@gmail.com",
+                                        "created_at": "2021-08-24T18:44:16.414Z",
+                                        "update_at": "2021-08-24T18:44:16.414Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "This email is already in use"
+                    }
+                }
+            },
+            "get": {
+                "tags": [ "User" ],
+                "summary": "Retorna todos os usuários",
+                "description": "Somente um usuário **admin** pode acessar.",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "properties": {
+                                    "user_id": {
+                                        "type": "string"
+                                        }
+                                },
+                                "example": {
+                                    "user_id": "2c7714b1-6309-450e-93e1-3d424761f45d"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Operação realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "user1": {
+                                            "id": "2c7714b1-6309-450e-93e1-3d424761f45d",
+                                            "admin": true,
+                                            "name": "Pedro Omar",
+                                            "email": "pedroomarneto@gmail.com",
+                                            "created_at": "2021-08-24T18:44:16.414Z",
+                                            "update_at": "2021-08-24T18:44:16.414Z"
+                                        },
+                                        "user2": {
+                                            "id": "2c7714b1-6309-450e-93e1-3d424761f45d",
+                                            "admin": false,
+                                            "name": "João Paulo",
+                                            "email": "joaopfc2764@gmail.com",
+                                            "created_at": "2021-08-24T18:44:16.414Z",
+                                            "updated_at": "2021-08-24T18:44:16.414Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Usuário não é admin ou não encontrado!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "error": "You don't have permission!"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/:user_id": {
+            "get": {
+                "tags": [ "User" ],
+                "summary": "Retorna um usuário específico",
+                "description": "Retorna o usuário com o id requerido",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "user_id": {
+                                        "type": "string"
+                                        }
+                                },
+                                "example": {
+                                    "user_id": "2c7714b1-6309-450e-93e1-3d424761f45d"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Operação realizada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "id": "2c7714b1-6309-450e-93e1-3d424761f45d",
+                                        "admin": false,
+                                        "name": "Pedro Omar",
+                                        "email": "pedroomarneto@gmail.com",
+                                        "created_at": "2021-08-24T18:44:16.414Z",
+                                        "update_at": "2021-08-24T18:44:16.414Z"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Usuário não encontrado!",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "example": {
+                                        "error": "User doesn't exists"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/:user_id/admin": {
+            "patch": {
+                "tags": [ "User" ],
+                    "summary": "Usuário torna-se admin",
+                    "description": "Modifica a o admin para true",
+                    "requestBody": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "user_id": {
+                                            "type": "string"
+                                        }
+                                    }
+                                    },
+                                    "example": {
+                                        "user_id": "2c7714b1-6309-450e-93e1-3d424761f45d",
+                                        "user": {
+                                            "id": "2c7714b1-6309-450e-93e1-3d424761f45d",
+                                            "admin": false,
+                                            "name": "Pedro Omar",
+                                            "email": "pedroomarneto@gmail.com",
+                                            "created_at": "2021-08-24T18:44:16.414Z",
+                                            "update_at": "2021-08-24T18:44:16.414Z"
+                                        }
+                                    }
+                            }
+                        }
+                        
+                    },
+                    "responses": {
+                        "201": {
+                            "description": "Operação realizada com sucesso",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "example": {
+                                            "id": "2c7714b1-6309-450e-93e1-3d424761f45d",
+                                            "admin": true,
+                                            "name": "Pedro Omar",
+                                            "email": "pedroomarneto@gmail.com",
+                                            "created_at": "2021-08-24T18:44:16.414Z",
+                                            "update_at": "2021-08-24T18:44:16.414Z"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "404": {
+                            "description": "Usuário não encontrado!",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "example": {
+                                            "error": "User doesn't exists"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+            }
+        }                      
+    }
+}

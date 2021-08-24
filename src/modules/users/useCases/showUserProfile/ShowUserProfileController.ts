@@ -13,7 +13,7 @@ class ShowUserProfileController {
 
       return response.json(showProfile);
     } catch (error) {
-      return response.status(404).json({ error: "Deu ruim no ShowProfile" });
+      return response.status(404).json({ error: "Usuário não encontrado!" });
     }
   }
 }
